@@ -40,6 +40,7 @@ const resetOffset = {
       topic: topic,
       partitions: []
     };
+    
     if (resetType === 'number') {
       for (let i in groupOffsets) {
         const group = groupOffsets[i];
