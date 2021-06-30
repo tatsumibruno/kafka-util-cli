@@ -1,7 +1,7 @@
 {
   "name": "kafka-util-cli",
   "version": "1.0.0",
-  "description": "CLI com comandos utilitários para facilitar o trabalho com Kafka",
+  "description": "CLI with utility commands to make working with Kafka easier",
   "main": "src/index.js",
   "dependencies": {
     "chalk": "^4.1.1",
@@ -19,6 +19,13 @@
   "scripts": {
     "start": "node ./src/index.js run",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "kafka",
+    "cli"
+  ],
+  "bin": {
+    "kafka-cli": "./src/index.js"
   },
   "repository": {
     "type": "git",
