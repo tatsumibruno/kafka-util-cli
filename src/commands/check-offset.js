@@ -1,7 +1,4 @@
-// const utils = require('./_utils');
-const {topicChooser, consumerGroupChooser} = require('./_utils');
-// const topicChooser = utils.topicChooser;
-// const consumerGroupChooser = utils.consumerGroupChooser;
+const { topicChooser, consumerGroupChooser } = require('./_utils');
 
 const checkOffset = {
   command: 'check-offset',

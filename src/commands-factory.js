@@ -3,6 +3,7 @@ const commandRunners = [
   require('./commands/list-consumer-groups').default,
   require('./commands/check-offset').default,
   require('./commands/reset-offset').default,
+  require('./commands/delete-topic').default,
 ]
 
 const factory = {
