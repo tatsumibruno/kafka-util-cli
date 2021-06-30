@@ -1,0 +1,31 @@
+{
+  "name": "kafka-util-cli",
+  "version": "1.0.0",
+  "description": "CLI com comandos utilitários para facilitar o trabalho com Kafka",
+  "main": "src/index.js",
+  "dependencies": {
+    "kafkajs": "^1.15.0",
+    "chalk": "^4.1.1",
+    "cli-table": "^0.3.6",
+    "commander": "^7.2.0",
+    "date-fns": "^2.22.1",
+    "figlet": "^1.5.0",
+    "inquirer": "^8.1.1",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./src/index.js run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tatsumibruno/kafka-util-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tatsumibruno/kafka-util-cli/issues"
+  },
+  "homepage": "https://github.com/tatsumibruno/kafka-util-cli#readme"
+}
