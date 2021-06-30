@@ -2,7 +2,7 @@
 CLI with utility commands to make working with Kafka easier
 
 # Setup
-    You will need NodeJS (prefer LTS versions)
+> You will need NodeJS (prefer LTS versions)
 
 1. Clone this repository:
 ```bash
@@ -15,7 +15,7 @@ npm install -g
 ```
 
 # Running
-    On the first execution, the CLI will ask the settings and store it in your `home` directory
+> On the first execution, the CLI will ask the settings and store it in your `home` directory
 
 ```bash
  $ kafka-cli run
