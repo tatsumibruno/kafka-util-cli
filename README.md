@@ -4,14 +4,9 @@ CLI with utility commands to make working with Kafka easier
 # Setup
 > You will need NodeJS (prefer LTS versions)
 
-1. Clone this repository:
+## Install it from npm
 ```bash
-git clone git@github.com:tatsumibruno/kafka-util-cli.git
-```
-2. Go to project directory and install it globally:
-```bash
-cd $HOME/projects/kafka-util-cli
-npm install -g
+npm install kafka-util-cli -g
 ```
 
 # Running
@@ -33,3 +28,6 @@ by Bruno Tatsumi [https://github.com/tatsumibruno]
   Reset offset 
 
 ```
+
+# How to use
+//In construction
