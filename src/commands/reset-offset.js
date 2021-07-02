@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const inquirer = require('inquirer');
 const utils = require('./_utils');
 const topicChooser = utils.topicChooser;
@@ -20,7 +21,7 @@ const resetOffset = {
       group.lag = `${group.offset != '-1' ? parseInt(partitionOffset.offset) - parseInt(group.offset) : 0}`;
     });
 
-    console.log('Showing the topic metadata...');
+    console.log(chalk.red(`Showing the topic metadata...`));
     console.log(groupOffsets);
 
     // const resetType = (await inquirer.prompt([{
@@ -70,6 +71,7 @@ const resetOffset = {
     //   });
     // }
     await admin.setOffsets(resetOffset);
+    console.log(chalk.red(`Offset reseted for topic ${topic} and group ${groupId}`));
   }
 };
 

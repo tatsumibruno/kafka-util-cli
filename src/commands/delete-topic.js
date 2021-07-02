@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { topicChooser } = require('./_utils');
 
 const listTopics = {
@@ -10,6 +11,7 @@ const listTopics = {
       topics: [topic],
       timeout: 3000,
     });
+    console.log(chalk.red(`Topic ${topic} deleted`));
   }
 };
 
