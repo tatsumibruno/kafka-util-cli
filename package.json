@@ -1,6 +1,6 @@
 {
   "name": "kafka-util-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI with utility commands to make working with Kafka easier",
   "main": "src/index.js",
   "dependencies": {
