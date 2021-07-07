@@ -15,9 +15,11 @@ console.log(chalk.cyan(figlet.textSync('Kafka Utils CLI')));
 console.log(chalk.grey('by Bruno Tatsumi [https://github.com/tatsumibruno]'));
 
 init = async () => {
+	let kafkajs
 	let kafkaAdmin;
 	try {
-		kafkaAdmin = await setup();
+		kafkajs = await setup();
+		kafkaAdmin = kafkajs.admin();
 		await kafkaAdmin.connect();
 		program
 			.command('run')
@@ -39,7 +41,7 @@ init = async () => {
 				const command = answer.command;
 				const commandRunner = commandFactory.create(command);
 				try {
-					await commandRunner.execute(kafkaAdmin);
+					await commandRunner.execute(kafkajs, kafkaAdmin);
 				} catch (error) {
 					console.log(error);
 				}

@@ -9,7 +9,7 @@ const resetOffset = {
   command: 'reset-offset',
   description: 'Reset offset',
   options: [],
-  execute: async (admin) => {
+  execute: async (kafka, admin) => {
     const topic = await topicChooser(admin);
     const groupId = await consumerGroupChooser(admin);
 

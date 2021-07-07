@@ -73,5 +73,5 @@ exports.default = async () => {
   }
 
   fs.writeFileSync(_KAFKA_CLI_SETTINGS_FILE, JSON.stringify(settings));
-  return kafka.admin();
+  return kafka;
 };

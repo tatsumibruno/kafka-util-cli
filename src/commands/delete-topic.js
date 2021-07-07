@@ -5,7 +5,7 @@ const listTopics = {
   command: 'delete-topic',
   description: 'Delete topic',
   options: [],
-  execute: async (admin) => {
+  execute: async (kafka, admin) => {
     const topic = await topicChooser(admin);
     await admin.deleteTopics({
       topics: [topic],

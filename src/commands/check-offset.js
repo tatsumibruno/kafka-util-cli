@@ -5,7 +5,7 @@ const checkOffset = {
   command: 'check-offset',
   description: 'Check offset',
   options: [],
-  execute: async (admin) => {
+  execute: async (kafka, admin) => {
     const topic = await topicChooser(admin);
     const groupId = await consumerGroupChooser(admin);
 
