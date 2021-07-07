@@ -5,6 +5,7 @@ const commandRunners = [
   require('./commands/check-offset').default,
   require('./commands/reset-offset').default,
   require('./commands/get-messages').default,
+  require('./commands/publish-message').default,
 ]
 
 const factory = {
