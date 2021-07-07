@@ -14,7 +14,7 @@ npm install kafka-util-cli -g
 
 ```bash
  $ kafka-cli run
-  _  __      __ _           _   _ _   _ _        ____ _     ___ 
+    _  __      __ _           _   _ _   _ _        ____ _     ___ 
  | |/ /__ _ / _| | ____ _  | | | | |_(_) |___   / ___| |   |_ _|
  | ' // _` | |_| |/ / _` | | | | | __| | / __| | |   | |    | | 
  | . \ (_| |  _|   < (_| | | |_| | |_| | \__ \ | |___| |___ | | 
@@ -23,11 +23,16 @@ npm install kafka-util-cli -g
 by Bruno Tatsumi [https://github.com/tatsumibruno]
 ? Wich command do you want to execute? (Use arrow keys)
 ❯ List topics 
+  Delete topic 
   List all existing consumer groups 
   Check offset 
   Reset offset 
+  Get messages from topic 
+  Publish message on topic 
 
 ```
 
 # How to use
-//In construction
+The CLI will drives the developer for a ease use, without have to store or remember the commands
+
+// Under construction
