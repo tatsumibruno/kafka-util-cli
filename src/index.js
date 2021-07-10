@@ -6,7 +6,6 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const Table = require('cli-table');
 const figlet = require('figlet');
-const shell = require('shelljs');
 const commandFactory = require('./commands-factory').default;
 const setup = require('./setup').default;
 

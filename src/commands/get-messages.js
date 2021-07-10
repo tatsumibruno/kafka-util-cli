@@ -1,6 +1,9 @@
 const inquirer = require('inquirer');
 inquirer.registerPrompt("date", require("inquirer-date-prompt"));
 const { topicChooser } = require('./_utils');
+const chalk = require('chalk');
+const os = require('os');
+const fs = require('fs');
 
 const getMessages = {
   command: 'get-messages',
@@ -18,11 +21,11 @@ const getMessages = {
         name: 'since',
       });
     }
-    // options.push({
-    //   message: 'Want to output message to file?',
-    //   type: 'confirm',
-    //   name: 'outputFile',
-    // });
+    options.push({
+      message: 'Want to redirect message to file?',
+      type: 'confirm',
+      name: 'outputFile',
+    });
     const answers = await inquirer.prompt(options);
     const groupId = 'kafka-util-cli-consumer-' + new Date().getTime();
     const consumer = kafka.consumer({ groupId: groupId })
@@ -31,11 +34,25 @@ const getMessages = {
       topic: topic,
       fromBeginning: startFromOption === 'beginning'
     });
+    const filename = os.homedir + '/kafka-util-cli-messages-' + new Date().getTime() + ".txt";
     consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        console.log('\n');
-        console.log(`Offset: ${message.offset}\nPartition: ${partition}\nReceived at: ${new Date(parseInt(message.timestamp)).toLocaleString()}`);
-        console.log(message.value.toString('utf8'));
+        let output = '\n'
+        output += `Key: ${message.key}\nOffset: ${message.offset}\nPartition: ${partition}\nReceived at: ${new Date(parseInt(message.timestamp)).toLocaleString()}`;
+        if (message.headers && Object.keys(message.headers).length > 0) {
+          const headers = Object.keys(message.headers)
+            .map(key => message.headers[key].toString('utf8'))
+            .map(header => JSON.parse(header))
+            .map(header => `${header.key}=${header.value}`)
+            .join(', ');
+          output += `\nHeaders: ${headers}`;
+        }
+        output += '\n' + message.value.toString('utf8');
+        if (answers.outputFile) {
+          fs.appendFileSync(filename, output + '\n');
+        } else {
+          console.log(output);
+        }
       }
     });
     if (answers.since) {
@@ -45,6 +62,10 @@ const getMessages = {
         consumer.seek({ topic: topic, partition: offset.partition, offset: offset.offset })
       });
     }
+    if (answers.outputFile) {
+      console.log(chalk.inverse('Messages will be written to file ' + filename));
+    }
+    console.log(chalk.gray('CTRL+C to exit'));
   }
 };
 

@@ -1,4 +1,4 @@
-const { Kafka } = require('kafkajs');
+const { Kafka, logLevel } = require('kafkajs');
 const inquirer = require('inquirer');
 const os = require('os');
 const fs = require('fs');
@@ -49,7 +49,8 @@ exports.default = async () => {
     clientId: 'kafka-utils-cli-' + new Date().getTime(),
     brokers: settings.brokers.split(','),
     connectionTimeout: 3000,
-    ssl: settings.sslEnabled
+    ssl: settings.sslEnabled,
+    logLevel: logLevel.ERROR
   });
 
   switch (settings.authentication) {

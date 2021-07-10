@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const inquirer = require('inquirer');
 const { topicChooser } = require('./_utils');
 
 const listTopics = {
@@ -7,11 +8,18 @@ const listTopics = {
   options: [],
   execute: async (kafka, admin) => {
     const topic = await topicChooser(admin);
-    await admin.deleteTopics({
-      topics: [topic],
-      timeout: 3000,
-    });
-    console.log(chalk.red(`Topic ${topic} deleted`));
+    const answer = await inquirer.prompt([{
+      name: 'confirm',
+      message: 'Are you sure?',
+      type: 'confirm'
+    }]);
+    if (answer.confirm === true) {
+      await admin.deleteTopics({
+        topics: [topic],
+        timeout: 3000,
+      });
+      console.log(chalk.red(`Topic ${topic} deleted`));
+    }
   }
 };
 

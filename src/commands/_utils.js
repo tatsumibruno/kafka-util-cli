@@ -1,8 +1,12 @@
 const inquirer = require('inquirer');
 inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
 
+let cachedTopics;
+let cachedGroups;
+
 exports.topicChooser = async (admin) => {
-  const topics = await admin.listTopics();
+  const topics = cachedTopics ? cachedTopics : await admin.listTopics();
+  cachedTopics = topics;
   return (await inquirer.prompt([{
     message: 'Wich topic? (type something to filter)',
     type: 'autocomplete',
@@ -17,7 +21,8 @@ exports.topicChooser = async (admin) => {
 };
 
 exports.consumerGroupChooser = async (admin) => {
-  const groups = (await admin.listGroups()).groups.map(g => g.groupId);
+  const groups = cachedGroups ? cachedGroups : (await admin.listGroups()).groups.map(g => g.groupId);
+  cachedGroups = groups;
   return (await inquirer.prompt([{
     message: 'Wich consumer group? (type something to filter)',
     type: 'autocomplete',
