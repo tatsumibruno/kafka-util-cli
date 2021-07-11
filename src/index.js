@@ -25,7 +25,7 @@ init = async () => {
 			.action(async () => {
 				const answer = await inquirer.prompt([
 					{
-						message: 'Wich command do you want to execute?',
+						message: 'Which command do you want to execute?',
 						type: 'list',
 						name: 'command',
 						choices: commandFactory.listCommands()
