@@ -17,7 +17,7 @@ exports.default = async () => {
   }
 
   settings.brokers = settings.brokers || (await inquirer.prompt([{
-    message: 'Enter the brokers host address with comma separator (eg: localhost:9092,localhost:9093,localhost:9094)',
+    message: 'Enter brokers host addresses, comma separated (eg: localhost:9092,localhost:9093,localhost:9094)',
     type: 'input',
     name: 'brokers'
   }])).brokers;
