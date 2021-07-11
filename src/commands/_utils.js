@@ -8,7 +8,7 @@ exports.topicChooser = async (admin) => {
   const topics = cachedTopics ? cachedTopics : await admin.listTopics();
   cachedTopics = topics;
   return (await inquirer.prompt([{
-    message: 'Wich topic? (type something to filter)',
+    message: 'Which topic? (type something to filter)',
     type: 'autocomplete',
     name: 'topic',
     source: function(answersSoFar, input) {
@@ -24,7 +24,7 @@ exports.consumerGroupChooser = async (admin) => {
   const groups = cachedGroups ? cachedGroups : (await admin.listGroups()).groups.map(g => g.groupId);
   cachedGroups = groups;
   return (await inquirer.prompt([{
-    message: 'Wich consumer group? (type something to filter)',
+    message: 'Which consumer group? (type something to filter)',
     type: 'autocomplete',
     name: 'groupId',
     source: function(answersSoFar, input) {
