@@ -21,11 +21,11 @@ const resetOffset = {
       group.lag = `${group.offset != '-1' ? parseInt(partitionOffset.offset) - parseInt(group.offset) : 0}`;
     });
 
-    console.log(chalk.red(`Showing the topic metadata...`));
+    console.log(chalk.red(`Showing topic metadata...`));
     console.log(groupOffsets);
 
     // const resetType = (await inquirer.prompt([{
-    //   message: 'Do you want reset by offset number or timestamp?',
+    //   message: 'Do you want to reset by offset number or timestamp?',
     //   type: 'list',
     //   name: 'resetType',
     //   choices: [{

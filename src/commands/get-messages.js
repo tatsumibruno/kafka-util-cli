@@ -22,7 +22,7 @@ const getMessages = {
       });
     }
     options.push({
-      message: 'Want to redirect message to file?',
+      message: 'Redirect message to file?',
       type: 'confirm',
       name: 'outputFile',
     });

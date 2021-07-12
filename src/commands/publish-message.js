@@ -11,17 +11,17 @@ const publishMessage = {
     const answer = await inquirer.prompt([
       {
         name: 'key',
-        message: 'Fill the key for message (let blank if dont need)',
+        message: 'Type message key (hit Enter for empty key)',
         type: 'input'
       },
       {
         name: 'payload',
-        message: 'Paste the payload',
+        message: 'Message payload',
         type: 'input'
       },
       {
         name: 'headers',
-        message: 'Any header? Let it blank or paste in format: key1:value1,key2:value2',
+        message: 'Any header? (format: key1:value1,key2:value2, hit Enter for empty header)',
         type: 'input',
         validate: (input) => {
           if (!input)
