@@ -42,7 +42,14 @@ const getMessages = {
         if (message.headers && Object.keys(message.headers).length > 0) {
           const headers = Object.keys(message.headers)
             .map(key => message.headers[key].toString('utf8'))
-            .map(header => JSON.parse(header))
+            .map(header => {
+              try {
+                return JSON.parse(json);
+              } catch (e) {
+                return null;
+              }
+            })
+            .filter(header => header != null)
             .map(header => `${header.key}=${header.value}`)
             .join(', ');
           output += `\nHeaders: ${headers}`;
