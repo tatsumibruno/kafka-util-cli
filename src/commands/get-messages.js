@@ -38,7 +38,8 @@ const getMessages = {
     consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
         let output = '\n'
-        output += `Key: ${message.key.toString()}\nOffset: ${message.offset}\nPartition: ${partition}\nReceived at: ${new Date(parseInt(message.timestamp)).toLocaleString()}`;
+        const key = message.key ? message.key.toString() : null;
+        output += `Key: ${key}\nOffset: ${message.offset}\nPartition: ${partition}\nReceived at: ${new Date(parseInt(message.timestamp)).toLocaleString()}`;
         if (message.headers && Object.keys(message.headers).length > 0) {
           const headers = Object.keys(message.headers)
             .map(key => message.headers[key].toString('utf8'))
