@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const utils = require('./_utils');
 const topicChooser = utils.topicChooser;
 const consumerGroupChooser = utils.consumerGroupChooser;
-inquirer.registerPrompt('datetime', require('inquirer-datepicker-prompt'))
+inquirer.registerPrompt('datetime', require('inquirer-datepicker'))
 
 const resetOffset = {
   command: 'reset-offset',

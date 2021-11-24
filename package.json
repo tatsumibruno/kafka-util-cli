@@ -1,6 +1,6 @@
 {
   "name": "kafka-util-cli",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "CLI with utility commands to make working with Kafka easier",
   "main": "src/index.js",
   "dependencies": {
@@ -9,10 +9,10 @@
     "commander": "^7.2.0",
     "date-fns": "^2.22.1",
     "figlet": "^1.5.0",
-    "inquirer": "^8.1.1",
+    "inquirer": "8.2.0",
     "inquirer-autocomplete-prompt": "^1.4.0",
     "inquirer-date-prompt": "^2.0.1",
-    "inquirer-datepicker-prompt": "^0.4.2",
+    "inquirer-datepicker": "2.0.0",
     "kafkajs": "^1.15.0",
     "shelljs": "^0.8.4"
   },
