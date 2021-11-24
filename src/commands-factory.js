@@ -6,6 +6,7 @@ const commandRunners = [
   require('./commands/reset-offset').default,
   require('./commands/get-messages').default,
   require('./commands/publish-message').default,
+  require('./commands/add-partition').default,
 ]
 
 const factory = {

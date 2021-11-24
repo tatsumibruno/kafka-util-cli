@@ -8,6 +8,7 @@ const Table = require('cli-table');
 const figlet = require('figlet');
 const commandFactory = require('./commands-factory').default;
 const setup = require('./setup').default;
+inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
 
 program.version(package.version);
 console.log(chalk.cyan(figlet.textSync('Kafka Utils CLI')));
@@ -26,15 +27,22 @@ init = async () => {
 				const answer = await inquirer.prompt([
 					{
 						message: 'Which command do you want to execute?',
-						type: 'list',
+						type: 'autocomplete',
 						name: 'command',
-						choices: commandFactory.listCommands()
-							.map(c => {
-								return {
-									name: c.description,
-									value: c.command
-								}
-							})
+						source: function (answersSoFar, input) {
+							const commands = commandFactory.listCommands()
+								.map(c => {
+									return {
+										name: c.description,
+										value: c.command
+									};
+								});
+							if (!input)
+								return commands;
+							return commands.filter(c => {
+								return c.name.toUpperCase().match(input.toUpperCase());
+							});
+						}
 					}
 				]);
 				const command = answer.command;
