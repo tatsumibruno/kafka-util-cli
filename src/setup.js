@@ -1,78 +1,117 @@
-const { Kafka, logLevel } = require('kafkajs');
-const inquirer = require('inquirer');
-const os = require('os');
-const fs = require('fs');
+const inquirer = require("inquirer");
+const os = require("os");
+const fs = require("fs");
 
-const _KAFKA_CLI_DIR = os.homedir() + '/.kafka-cli';
-const _KAFKA_CLI_SETTINGS_FILE = _KAFKA_CLI_DIR + '/settings.json';
+const _KAFKA_CLI_DIR = os.homedir() + "/.kafka-cli";
+const _KAFKA_CLI_SETTINGS_FILE = _KAFKA_CLI_DIR + "/settings.json";
 
 exports.default = async () => {
   if (!fs.existsSync(_KAFKA_CLI_DIR)) {
     fs.mkdirSync(_KAFKA_CLI_DIR);
   }
-  let settings = {};
+  let settings = {
+    profiles: {
+      default: {},
+    },
+  };
   if (fs.existsSync(_KAFKA_CLI_SETTINGS_FILE)) {
     const rawData = fs.readFileSync(_KAFKA_CLI_SETTINGS_FILE);
     settings = JSON.parse(rawData);
+
+    if (!("profiles" in settings)) {
+      console.error(
+        `Wrong settings format, the '${_KAFKA_CLI_SETTINGS_FILE}' file should be in this format, Ex:`
+      );
+      console.error(
+        `{ profiles: { default: { brokers: "localhost:9092,localhost:9093,localhost:9094", "sslEnabled": "false" }}}`
+      );
+      process.exit();
+    }
   }
 
-  settings.brokers = settings.brokers || (await inquirer.prompt([{
-    message: 'Enter brokers host addresses, comma separated (eg: localhost:9092,localhost:9093,localhost:9094)',
-    type: 'input',
-    name: 'brokers'
-  }])).brokers;
+  const defaultProfile = settings.profiles["default"];
 
-  settings.sslEnabled = settings.sslEnabled != undefined ? settings.sslEnabled : (await inquirer.prompt([{
-    message: 'Do you use SSL?',
-    name: 'sslEnabled',
-    type: 'confirm',
-  }])).sslEnabled;
+  defaultProfile.brokers =
+    defaultProfile.brokers ||
+    (
+      await inquirer.prompt([
+        {
+          message:
+            "Enter brokers host addresses, comma separated (eg: localhost:9092,localhost:9093,localhost:9094)",
+          type: "input",
+          name: "brokers",
+        },
+      ])
+    ).brokers;
 
-  settings.authentication = settings.authentication || (await inquirer.prompt([{
-    message: 'Which authentication do you use?',
-    type: 'list',
-    name: 'authentication',
-    choices: [
-      {
-        name: 'None',
-        value: 'none',
-        extra: null
-      },
-      {
-        name: 'User & password',
-        value: 'user-password'
-      }
-    ]
-  }])).authentication;
+  defaultProfile.sslEnabled =
+    defaultProfile.sslEnabled != undefined
+      ? defaultProfile.sslEnabled
+      : (
+          await inquirer.prompt([
+            {
+              message: "Do you use SSL?",
+              name: "sslEnabled",
+              type: "confirm",
+            },
+          ])
+        ).sslEnabled;
 
-  const kafka = new Kafka({
-    clientId: 'kafka-utils-cli-' + new Date().getTime(),
-    brokers: settings.brokers.split(','),
-    connectionTimeout: 3000,
-    ssl: settings.sslEnabled,
-    logLevel: logLevel.ERROR
-  });
+  defaultProfile.authentication =
+    defaultProfile.authentication ||
+    (
+      await inquirer.prompt([
+        {
+          message: "Which authentication do you use?",
+          type: "list",
+          name: "authentication",
+          choices: [
+            {
+              name: "None",
+              value: "none",
+              extra: null,
+            },
+            {
+              name: "User & password",
+              value: "user-password",
+            },
+          ],
+        },
+      ])
+    ).authentication;
 
-  switch (settings.authentication) {
-    case 'user-password':
-      settings.user = settings.user || (await inquirer.prompt([{
-        message: 'Type the username',
-        name: 'user',
-        type: 'input',
-      }])).user;
-      settings.password = settings.password || (await inquirer.prompt([{
-        message: 'Type the password',
-        name: 'password',
-        type: 'password',
-      }])).password;
+  switch (defaultProfile.authentication) {
+    case "user-password":
+      defaultProfile.user =
+        defaultProfile.user ||
+        (
+          await inquirer.prompt([
+            {
+              message: "Type the username",
+              name: "user",
+              type: "input",
+            },
+          ])
+        ).user;
+      defaultProfile.password =
+        defaultProfile.password ||
+        (
+          await inquirer.prompt([
+            {
+              message: "Type the password",
+              name: "password",
+              type: "password",
+            },
+          ])
+        ).password;
       kafka.sasl = {
-        mechanism: 'plain',
-        username: settings.user,
-        password: settings.password
-      }
+        mechanism: "plain",
+        username: defaultProfile.user,
+        password: defaultProfile.password,
+      };
       break;
   }
 
-  fs.writeFileSync(_KAFKA_CLI_SETTINGS_FILE, JSON.stringify(settings));
-  return kafka;
+  fs.writeFileSync(_KAFKA_CLI_SETTINGS_FILE, JSON.stringify(settings, null, 4));
+  return settings;
 };
